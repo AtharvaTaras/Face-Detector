@@ -3,7 +3,7 @@ import cv2
 # Global Vars
 clr = (0, 0, 0)
 thick = 5
-face_count = 0
+font = cv2.FONT_HERSHEY_PLAIN
 
 dataset = cv2.CascadeClassifier('frontfacedata.xml')
 vid = cv2.VideoCapture(0)
@@ -33,6 +33,18 @@ def draw():
         cv2.rectangle(frame, (x, y), (x + w, y + h), clr, thick)
 
 
+def count():
+    global img, font, clr, frame
+
+    face_count = 0
+    for each in face_coordinates:
+        face_count += 1
+        faces = str(face_count)
+        text = ('Faces found - ' + faces)
+        # img = ...(image, text, coordinates, font, size, color, thickness, ...)
+        frame = cv2.putText(frame, text, (25, 45), font, 2, clr, 2, cv2.LINE_AA)
+
+
 def display():
     global frame
 
@@ -44,5 +56,5 @@ while True:
     greyscale()
     get_faces()
     draw()
+    count()
     display()
-
